@@ -35,12 +35,11 @@ bcrypt = Bcrypt(app)
 
 # JWT MANAGER - FLASK JWT EXTENDED Configuration: 
 
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1) #############################################################
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 
-app.config["JWT_SECRET_KEY"] = os.environ.get('JWT_SECRET')  # PUT THIS INTO ENV ?????????????????????????????????????????????????????????????
+app.config["JWT_SECRET_KEY"] = os.environ.get('JWT_SECRET')
 jwt = JWTManager(app)
 
-# database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
@@ -51,44 +50,35 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type = True)
 db.init_app(app)
 
-# Allow CORS requests to this API
 CORS(app)
 
-# add the admin
 setup_admin(app)
 
-# add the admin
 setup_commands(app)
 
-# Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
 
-# Handle/serialize errors like a JSON object
+
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
-# generate sitemap with all your endpoints
+
 @app.route('/')
 def sitemap():
     if ENV == "development":
         return generate_sitemap(app)
     return send_from_directory(static_file_dir, 'index.html')
 
-# any other endpoint will try to serve it like a static file
+
 @app.route('/<path:path>', methods=['GET'])
 def serve_any_other_file(path):
     if not os.path.isfile(os.path.join(static_file_dir, path)):
         path = 'index.html'
     response = send_from_directory(static_file_dir, path)
-    response.cache_control.max_age = 0 # avoid cache memory
+    response.cache_control.max_age = 0
     return response
 
-
-# LOGIN USER: 
-
-# Create a route to authenticate your users and return JWTs(login) The
-# create_access_token() function is used to actually generate the JWT.
 
 @app.route("/api/token", methods=["POST"])
 def create_token():
@@ -104,7 +94,7 @@ def create_token():
 
     user = User.query.filter_by(email=body['email']).first()
     if user is None: 
-        return jsonify({"msg": "user doesn't exist"}), 402 # REALLY IMPORTANT TO PUT THIS 402 HERE, OR OTHERWISE 200 EVEN IF USER DOESN'T EXIST!!!!!!!
+        return jsonify({"msg": "user doesn't exist"}), 402
     
     if not bcrypt.check_password_hash(user.password, body['password']):
         return jsonify({'msg':'password is not correct'}), 402
@@ -112,8 +102,6 @@ def create_token():
     access_token = create_access_token(identity=user.email)
     return jsonify(access_token=access_token), 200
 
-
-# REGISTER USER: 
 
 @app.route('/api/user', methods=['POST'])
 def add_new_user():
@@ -135,7 +123,6 @@ def add_new_user():
     return jsonify({'msg': 'User with email {} has been created'.format(body['email'])})
 
 
-# this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)

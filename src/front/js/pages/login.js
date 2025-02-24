@@ -16,12 +16,7 @@ export const Login = () => {
     e.preventDefault();
     actions.login(email, password);
     actions.setRegistrationInProgress(true);
-    // if (store.registrationSuccess) {
-    //   setPassword("");
-    //   setEmail("");
-    // }
-
-    // CONDITIONALS with FRONTEND messages (below in the jsx):
+    
     setTimeout(() => {
       actions.setRegistrationInProgress(false);
       if (store.registrationSuccess) {
@@ -34,14 +29,8 @@ export const Login = () => {
     }, 2000);
   };
 
-  // if (store.token && (store.token != "") & (store.token != undefined)) {
-  //   setTimeout(() => {
-  //     navigate("/");
-  //   }, 3000);
-  // }
-
   return (
-    <div className="text-center mt-5 home_max-width container">
+    <div className="text-center mt-6 home_max-width container">
       {!store.registrationSuccess && <h1>Log In</h1>}
 
       {store.registrationSuccess && (
@@ -83,14 +72,14 @@ export const Login = () => {
             />
             <button
               type="submit"
-              className="btn btn-dark mt-5"
+              className="btn btn-primary mt-5"
               disabled={store.registrationInProgress}
             >
               Login
             </button>
           </form>
 
-          <p className="mt-3 mb-5">
+          <p className="mt-3 mb-5" style={{ fontSize: "1.5rem" }}>
             Are you new here? <Link to="/signup">Sign up first </Link>
           </p>
         </div>

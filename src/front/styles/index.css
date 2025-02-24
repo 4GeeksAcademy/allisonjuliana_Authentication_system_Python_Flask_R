@@ -1,37 +1,55 @@
 .gradient-background {
-    background: radial-gradient(
-        at 97% 21%,
-        rgb(196, 196, 223) 0px,
-        transparent 40%
-      ),
-      radial-gradient(at 42% 99%, rgb(149, 226, 223) 0px, transparent 40%),
-      radial-gradient(at 10% 29%, rgb(176, 179, 207) 0px, transparent 40%),
-      radial-gradient(at 27% 96%, rgb(149, 192, 228) 0px, transparent 40%),
-      radial-gradient(at 33% 40%, rgb(140, 146, 232) 0px, transparent 40%),
-      radial-gradient(at 99% 83%, rgb(141, 191, 224) 0px, transparent 40%);
-  }
-  
-  .full-height {
-    min-height: 100vh;
-  }
-  
-  .home_max-width {
-    max-width: 500px;
-  }
-  
-  .waiting-cursor {
-    cursor: wait;
-  }
-  
+  background-color: #c6e6f1;
+}
+
+.full-height {
+  min-height: 100vh;
+}
+
+.home_max-width {
+  max-width: 500px;
+}
+
+.waiting-cursor {
+  cursor: wait;
+}
+
+.logo-size {
+  height: 50x;
+  width: 50px;
+}
+
+@media screen and (min-width: 768px) {
   .logo-size {
-    height: 250x;
-    width: 250px;
+    height: 270px;
+    width: 270px;
   }
-  
-  @media screen and (min-width: 768px) {
-    .logo-size {
-      height: 370px;
-      width: 370px;
-    }
-  }
-  
+}
+
+.navbar {
+  background-color: #3c3f42;
+  padding: 15px;
+  width: 100%;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.navbar-brand {
+  font-size: 2.5rem;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  text-align: center;
+  font-size: 3rem;
+}
+
+.home_max-width {
+  margin-top: 80px;
+}

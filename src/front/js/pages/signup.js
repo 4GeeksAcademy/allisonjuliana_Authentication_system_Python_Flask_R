@@ -17,7 +17,6 @@ export const Signup = () => {
     actions.register(email, password);
     actions.setRegistrationInProgress(true);
 
-    // CONDITIONALS with FRONTEND messages (below in the jsx):
     setTimeout(() => {
       actions.setRegistrationInProgress(false);
       if (store.registrationSuccess) {
@@ -30,7 +29,7 @@ export const Signup = () => {
   };
 
   return (
-    <div className="text-center mt-5 home_max-width container">
+    <div className="text-center mt-6 home_max-width container">
       {!store.registrationSuccess && <h1>Create account</h1>}
 
       {store.registrationEmpty && (
@@ -75,7 +74,7 @@ export const Signup = () => {
           />
           <button
             type="submit"
-            className="btn btn-dark mt-5"
+            className="btn btn-primary mt-5"
             disabled={store.registrationInProgress}
           >
             Sign up
@@ -86,7 +85,6 @@ export const Signup = () => {
           You already have an account? <Link to="/login"> Log In then </Link>
         </p>
       </div>
-      {/* )} */}
     </div>
   );
 };

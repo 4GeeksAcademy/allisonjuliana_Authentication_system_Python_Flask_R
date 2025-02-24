@@ -13,9 +13,9 @@ export const Navbar = () => {
   };
   return (
     <div className="container">
-      <div className="d-flex justify-content-between align-items-center pt-4">
+      <div className="navbar d-flex justify-content-between align-items-center pt-4">
         <Link to="/" className="text-decoration-none">
-          <span className="navbar-brand mb-0 h1 ">4Geeks Authentication</span>
+          <span className="navbar-brand mb-0 h1 ">Authentication</span>
         </Link>
 
         {!store.token ? (

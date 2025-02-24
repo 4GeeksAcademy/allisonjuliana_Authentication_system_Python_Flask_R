@@ -4,21 +4,16 @@ import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Private = (props) => {
-  //   const { store, actions } = useContext(Context);
-  //   const params = useParams();
 
   return (
-    <div>
+    <div className="centered">
       <h1 className="display-4">
-        This is your private area 
-        {/* {store.demo[params.theid].title} */}
+        This is your private area
       </h1>
     </div>
   );
 };
 
-
-//////////////////////////////////////////////////////////////que es esto?: 
 Private.propTypes = {
   match: PropTypes.object,
 };

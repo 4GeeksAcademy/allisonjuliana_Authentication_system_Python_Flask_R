@@ -42,8 +42,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  setStore({ registrationWrong: value });
 		},
   
-		/////////// REGISTER USER IN DATABASE //////////////
-  
 		register: async (email, password) => {
 		  const store = getStore();
   
@@ -79,16 +77,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			const data = await resp.json();
 			console.log("this came from the backend", data);
   
-			// sessionStorage.setItem("token", data.access_token); //I know it's access_token cos I saw it in Postman/Google Network tool
-			// setStore({ token: data.access_token });
 			return true;
 		  } catch (error) {
 			console.log("there has been an error signing up");
 			setStore({ registrationExists: true });
 		  }
 		},
-  
-		/////////// CHECK IF USER IN DATABASE + GET TOKEN //////////////
   
 		login: async (email, password) => {
 		  const store = getStore();
@@ -99,14 +93,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  }
   
 		  const requestOptions = {
-			method: "Post",
+			method: "GET",
 			headers: {
 			  "Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-			  email: email,
-			  password: password,
-			}),
+			}
 		  };
   
 		  try {
@@ -127,7 +117,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  data
 			);
 			if (data.access_token != undefined) {
-			  sessionStorage.setItem("token", data.access_token); //I know it's access_token cos I saw it in Postman/Google Network tool
+			  sessionStorage.setItem("token", data.access_token);
 			  setStore({ token: data.access_token });
 			  setStore({ registrationSuccess: true });
 			  return true;
@@ -140,10 +130,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		  }
 		},
   
-		/////////// MAINTAIN TOKEN //////////////
-  
 		syncTokenFromSessionStore: () => {
-		  // in the appContext, cos needed everytime the page refreshes
 		  const token = sessionStorage.getItem("token");
 		  console.log(
 			"Application just loaded, synching the session storage token"
@@ -152,17 +139,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			setStore({ token: token });
 		},
   
-		/////////// LOGOUT + REMOVE TOKEN //////////////
-  
 		logout: () => {
 		  sessionStorage.removeItem("token");
 		  console.log("login out");
 		  setStore({ token: null });
 		  setStore({ message: null });
-		  // location.reload();
 		},
   
-		// DOCS say this: Authorization: Bearer <access_token> (so careful with leaving a space after "Bearer ", or it doesn't work !!!)
 		getMessage: () => {
 		  const store = getStore();
   
