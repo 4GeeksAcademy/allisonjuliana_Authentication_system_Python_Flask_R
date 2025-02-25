@@ -12,21 +12,28 @@ export const Login = () => {
 
   console.log("this is your token", store.token);
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    actions.login(email, password);
+
+    if (!email || !password) {
+      actions.setRegistrationEmpty(true);
+      window.location.href = "/login";
+      return;
+    }
+
     actions.setRegistrationInProgress(true);
-    
-    setTimeout(() => {
+    try {
+      const loginSuccess = await actions.login(email, password);
       actions.setRegistrationInProgress(false);
-      if (store.registrationSuccess) {
-        actions.setRegistrationSuccess(false);
-        navigate("/");
+      if (loginSuccess) {
+        navigate("/private");
+      } else {
+        actions.setRegistrationWrong(true);
       }
-      actions.setRegistrationDoesntExist(false);
-      actions.setRegistrationEmpty(false);
-      actions.setRegistrationWrong(false);
-    }, 2000);
+    } catch (error) {
+      actions.setRegistrationWrong(true);
+      actions.setRegistrationInProgress(false);
+    }
   };
 
   return (
@@ -78,7 +85,6 @@ export const Login = () => {
               Login
             </button>
           </form>
-
           <p className="mt-3 mb-5" style={{ fontSize: "1.5rem" }}>
             Are you new here? <Link to="/signup">Sign up first </Link>
           </p>

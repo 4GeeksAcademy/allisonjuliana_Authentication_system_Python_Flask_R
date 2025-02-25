@@ -12,20 +12,31 @@ export const Signup = () => {
 
   console.log("this is your token", store.token);
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    actions.register(email, password);
-    actions.setRegistrationInProgress(true);
 
-    setTimeout(() => {
+    if (!email || !password) {
+      actions.setRegistrationEmpty(true);
+      window.location.reload();
+      window.location.href = "/signup";
+      return;
+    }
+
+    actions.setRegistrationInProgress(true);
+    try {
+      const registrationSuccess = await actions.register(email, password);
+
       actions.setRegistrationInProgress(false);
-      if (store.registrationSuccess) {
-        actions.setRegistrationSuccess(false);
+      if (registrationSuccess) {
+        actions.setRegistrationSuccess(true);
         navigate("/login");
+      } else {
+        actions.setRegistrationExists(true);
       }
-      actions.setRegistrationExists(false);
-      actions.setRegistrationEmpty(false);
-    }, 2000);
+    } catch (error) {
+      actions.setRegistrationExists(true);
+      actions.setRegistrationInProgress(false);
+    }
   };
 
   return (
@@ -80,7 +91,6 @@ export const Signup = () => {
             Sign up
           </button>
         </form>
-
         <p className="mt-3 mb-5">
           You already have an account? <Link to="/login"> Log In then </Link>
         </p>
