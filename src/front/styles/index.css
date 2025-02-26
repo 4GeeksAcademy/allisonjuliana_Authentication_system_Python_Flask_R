@@ -1,5 +1,5 @@
 .gradient-background {
-  background-color: #bdccd1;
+  background-color: #d9eff7;
 }
 
 .full-height {
@@ -8,6 +8,11 @@
 
 .home_max-width {
   max-width: 500px;
+  height: 100vh; /* Esto asegura que el contenedor tenga una altura de 100% de la pantalla */
+  display: flex;
+  flex-direction: column; /* Coloca los elementos en una columna */
+  justify-content: center; /* Centra verticalmente los elementos */
+  align-items: center; /* Centra horizontalmente los elementos */
 }
 
 .waiting-cursor {
@@ -42,12 +47,19 @@
 }
 
 .centered {
+  background-color: rgb(225, 248, 230);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60vh;
+  height: 100vh;
   text-align: center;
-  font-size: 3rem;
+  font-size: 5rem;
+}
+
+.centered h1 {
+  font-size: 7rem;
+  margin: 0;
+  color: blue
 }
 
 .home_max-width {

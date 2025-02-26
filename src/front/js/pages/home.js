@@ -13,11 +13,10 @@ export const Home = () => {
   }, [store.token]);
 
   return (
-    <div className="text-center mt-6 container home_max-width">
+    <div className="text-center mt-7 container home_max-width">
       <h1>Welcome to our site{store.message}!</h1>
 
       <div className=" my-5 fs-5 fw-bold">
-        <div> </div>
         {store.message && (
           <Link to="/private">
             <button className="btn btn-primary">

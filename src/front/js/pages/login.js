@@ -26,9 +26,10 @@ export const Login = () => {
       const loginSuccess = await actions.login(email, password);
       actions.setRegistrationInProgress(false);
       if (loginSuccess) {
-        navigate("/private");
+        navigate("/");
       } else {
         actions.setRegistrationWrong(true);
+        window.location.href = "/login";
       }
     } catch (error) {
       actions.setRegistrationWrong(true);

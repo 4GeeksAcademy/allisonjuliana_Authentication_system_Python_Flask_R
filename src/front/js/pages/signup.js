@@ -17,7 +17,6 @@ export const Signup = () => {
 
     if (!email || !password) {
       actions.setRegistrationEmpty(true);
-      window.location.reload();
       window.location.href = "/signup";
       return;
     }
@@ -29,13 +28,14 @@ export const Signup = () => {
       actions.setRegistrationInProgress(false);
       if (registrationSuccess) {
         actions.setRegistrationSuccess(true);
-        navigate("/login");
+        window.location.href = "/login";
       } else {
         actions.setRegistrationExists(true);
+        window.location.href = "/signup";
       }
     } catch (error) {
       actions.setRegistrationExists(true);
-      actions.setRegistrationInProgress(false);
+      actions.setRegistrationInProgress(false);      
     }
   };
 
