@@ -10,14 +10,11 @@ export const Login = () => {
 
   const navigate = useNavigate();
 
-  console.log("this is your token", store.token);
-
   const handleClick = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
       actions.setRegistrationEmpty(true);
-      window.location.href = "/login";
       return;
     }
 
@@ -25,11 +22,14 @@ export const Login = () => {
     try {
       const loginSuccess = await actions.login(email, password);
       actions.setRegistrationInProgress(false);
+
       if (loginSuccess) {
-        navigate("/");
+        // Guarda en localStorage el estado de autenticación
+        localStorage.setItem('isAuthenticated', 'true');
+        actions.setRegistrationSuccess(true); // Actualiza el estado global
+        navigate("/private");
       } else {
         actions.setRegistrationWrong(true);
-        window.location.href = "/login";
       }
     } catch (error) {
       actions.setRegistrationWrong(true);

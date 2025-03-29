@@ -16,7 +16,7 @@ export const Home = () => {
     <div className="text-center mt-7 container home_max-width">
       <h1>Welcome to our site{store.message}!</h1>
 
-      <div className=" my-5 fs-5 fw-bold">
+      {/* <div className=" my-5 fs-5 fw-bold">
         {store.message && (
           <Link to="/private">
             <button className="btn btn-primary">
@@ -24,7 +24,7 @@ export const Home = () => {
             </button>
           </Link>
         )}
-      </div>
+      </div> */}
       <div className="d-flex justify-content-center">
         <img src={Logo} className="logo-size" />
       </div>
